@@ -4,8 +4,8 @@ import CustomSafeAreaScrollView from '../components/global/CustomSafeAreaViewScr
 
 const HomeScreen: FC = () => {
   return (
-    <CustomSafeAreaScrollView>
-      <Text>Testing Complete</Text>
+    <CustomSafeAreaScrollView style={{flex:1,alignItems:'center',justifyContent:"center",}}>
+      <Text style={{color:"white",flex:1}}>Testing Complete</Text>
     </CustomSafeAreaScrollView>
   )
 }
