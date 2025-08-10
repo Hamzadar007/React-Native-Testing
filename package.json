@@ -9,6 +9,8 @@
     "format": "prettier --check src && prettier --write src",
     "start": "react-native start",
     "test": "jest",
+    "build:android": "cd android && ./gradlew assembleRelease",
+    "build:android-debug": "cd android && ./gradlew assembleDebug",
     "detox:android_build": "detox build --configuration android.emu.debug",
     "detox:android_test": "detox test --configuration android.emu.debug",
     "detox:ios_build": "detox build --configuration ios.sim.debug",
