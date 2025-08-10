@@ -68,6 +68,54 @@ You've successfully run and modified your React Native App. :partying_face:
 
 If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
 
+# APK Generation
+
+This project automatically generates Android APK files after successful merges to the main branch using GitHub Actions.
+
+## How to Get the APK
+
+### Option 1: Download from GitHub Actions (Recommended)
+
+1. **After a successful merge to main branch**, go to your GitHub repository
+2. Click on the **"Actions"** tab
+3. Find the latest successful workflow run (should be named "Pull Request & Push Checks")
+4. Click on the **"Build Android APK"** job
+5. Scroll down to the **Artifacts** section
+6. Click **"app-release"** to download the APK file
+
+### Option 2: Build Locally
+
+You can also build the APK locally using these commands:
+
+```bash
+# Build release APK
+yarn build:android
+
+# Build debug APK
+yarn build:android-debug
+```
+
+The APK will be generated at:
+- **Release APK**: `android/app/build/outputs/apk/release/app-release.apk`
+- **Debug APK**: `android/app/build/outputs/apk/debug/app-debug.apk`
+
+## APK Build Process
+
+The automated APK build process:
+1. ✅ Runs code quality checks (ESLint, Prettier)
+2. ✅ Runs all tests (Jest)
+3. 🏗️ Builds the Android APK using Gradle
+4. 📤 Uploads the APK as a GitHub artifact
+5. 🔄 APK is retained for 30 days
+
+## Requirements
+
+- The APK build only triggers on **pushes to main branch** (not on pull requests)
+- All tests must pass before the APK is built
+- The APK is signed with the debug keystore (for development/testing purposes)
+
+---
+
 # Git Hooks with Husky
 
 This project uses [Husky](https://typicode.github.io/husky/) to manage Git hooks for code quality and testing.
