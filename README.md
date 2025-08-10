@@ -95,6 +95,13 @@ yarn build:android
 yarn build:android-debug
 ```
 
+### Option 3: Use the Build Script
+
+```bash
+# Build both APKs with detailed output
+./scripts/build-apk.sh
+```
+
 The APK will be generated at:
 - **Release APK**: `android/app/build/outputs/apk/release/app-release.apk`
 - **Debug APK**: `android/app/build/outputs/apk/debug/app-debug.apk`
