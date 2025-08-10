@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
-import OnBoardingScreen from '../../src/screens/OnBoardingScreen';
+import OnboardingScreen from '../../src/screens/OnboardingScreen';
 import { navigate } from '../../src/utils/NavigationUtil';
 
 
@@ -11,9 +11,9 @@ jest.mock('../../src/utils/NavigationUtil', () => ({
 
 
 
-describe('OnBoardingScreen', () => {
+describe('OnboardingScreen', () => {
     it('should render onboarding slides and navigate correctly', () => {
-        const { getByText } = render(<OnBoardingScreen />);
+        const { getByText } = render(<OnboardingScreen />);
 
         const loginButton = getByText('Login');
         const signUpButton = getByText('Sign up');
@@ -26,7 +26,7 @@ describe('OnBoardingScreen', () => {
     });
 
     it('should call scrollBy(1) when Next button is pressed in the first slide', () => {
-        const { getAllByText } = render(<OnBoardingScreen />);
+        const { getAllByText } = render(<OnboardingScreen />);
         const nextButtons = getAllByText('Next');
 
 
