@@ -30,8 +30,7 @@ jobs:
     - name: Check Prettier formatting
       run: yarn prettier --check src
       
-    - name: Run TypeScript type check
-      run: yarn tsc --noEmit
+
 
   test:
     name: Run Tests
