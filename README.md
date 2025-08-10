@@ -74,8 +74,8 @@ This project uses [Husky](https://typicode.github.io/husky/) to manage Git hooks
 
 ## Available Hooks
 
-- **pre-commit**: Automatically runs `yarn lint:fix` and `yarn format` before each commit to ensure code quality
-- **pre-push**: Automatically runs `yarn test` before pushing to ensure all tests pass
+- **pre-commit**: Automatically runs `yarn lint:fix`, `yarn format`, and `yarn test:unit` before each commit to ensure code quality
+- **pre-push**: Automatically runs `yarn test:all` before pushing to ensure all tests (unit + E2E) pass
 
 ## How it works
 
@@ -85,7 +85,7 @@ This project uses [Husky](https://typicode.github.io/husky/) to manage Git hooks
    - Only allow the commit if both operations succeed
 
 2. **Pre-push**: When you run `git push`, Husky will automatically:
-   - Run all Jest tests
+   - Run all unit tests and E2E tests
    - Only allow the push if all tests pass
 
 ## Manual execution
@@ -99,8 +99,14 @@ yarn lint:fix
 # Format code
 yarn format
 
-# Run tests
-yarn test
+# Run unit tests only
+yarn test:unit
+
+# Run E2E tests only
+yarn test:e2e
+
+# Run all tests (unit + E2E)
+yarn test:all
 ```
 
 ## Skipping hooks (if needed)
