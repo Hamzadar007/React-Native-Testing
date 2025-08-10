@@ -5,9 +5,15 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "lint": "eslint .",
+    "lint:fix": "eslint src --fix ",
+    "format": "prettier --check src && prettier --write src",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "detox:android_build": "detox build --configuration android.emu.debug",
+    "detox:android_test": "detox test --configuration android.emu.debug",
+    "detox:ios_build": "detox build --configuration ios.sim.debug",
+    "detox:ios_test": "detox test --configuration ios.sim.debug",
+    "prepare": "husky"
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "^6.6.1",
@@ -50,7 +56,9 @@
     "@types/react": "^18.2.6",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.6.3",
+    "detox": "^20.40.2",
     "eslint": "^8.19.0",
+    "husky": "^9.1.7",
     "jest": "^29.6.3",
     "prettier": "2.8.8",
     "react-test-renderer": "18.2.0",

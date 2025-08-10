@@ -24,7 +24,7 @@ describe('RegisterScreen', () => {
 
     afterEach(() => {
         persistor.purge();  // Ensure persistor is cleaned up
-        jest.clearAllMocks();  // Clear mocks after each test
+        jest.clearAllMocks();  
     });
 
     it('should render correctly', () => {
