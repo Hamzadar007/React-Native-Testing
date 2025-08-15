@@ -65,12 +65,24 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v2
       
+    # Add NDK and CMake setup for native dependencies
+    - name: Setup Android NDK
+      run: |
+        echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "ndk;27.1.12297006"
+        echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "cmake;3.22.1"
+        
+    - name: Set environment variables
+      run: |
+        echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/27.1.12297006" >> $GITHUB_ENV
+        echo "ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/27.1.12297006" >> $GITHUB_ENV
+        
     - name: Cache Gradle packages
       uses: actions/cache@v3
       with:
         path: |
           ~/.gradle/caches
           ~/.gradle/wrapper
+          $ANDROID_HOME/ndk
         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
         restore-keys: |
           ${{ runner.os }}-gradle-
