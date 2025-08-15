@@ -6,7 +6,7 @@ module.exports = {
     '^.+\\.(ts|tsx)$': 'babel-jest',
   },
   transformIgnorePatterns: [
-    'node_modules/(?!(react-native|react-native-swiper|react-redux|react-native-linear-gradient|@react-navigation|@react-native|@react-native/assets)/)',
+    'node_modules/(?!(react-native|react-native-swiper|react-redux|react-native-linear-gradient|@react-navigation|@react-native|@react-native/assets|react-native-worklets)/)',
   ],
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
   testPathIgnorePatterns: ['/node_modules/', '/android/', '/ios/', '/e2e/'],
@@ -26,4 +26,7 @@ module.exports = {
       babelConfig: true,
     },
   },
+  // Add this for React Native 0.80.2 compatibility
+  testEnvironment: 'node',
+  moduleDirectories: ['node_modules', 'src'],
 };

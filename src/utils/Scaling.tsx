@@ -1,5 +1,5 @@
-import {Dimensions, PixelRatio} from 'react-native';
-import {moderateScale, scale, verticalScale} from 'react-native-size-matters';
+import { Dimensions, PixelRatio } from 'react-native';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 export const normalizeModerately = (size: number, factor = 0.5): number => {
   return PixelRatio.roundToNearestPixel(moderateScale(size, factor));

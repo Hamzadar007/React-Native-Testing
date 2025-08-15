@@ -1,9 +1,9 @@
-import React, {useRef, FC} from 'react';
-import {StyleSheet, Dimensions, View} from 'react-native';
+import React, { useRef, FC } from 'react';
+import { StyleSheet, Dimensions, View } from 'react-native';
 import Swiper from 'react-native-swiper';
-import {Colors} from '../utils/Colors';
+import { Colors } from '../utils/Colors';
 import OnboardItem from '../components/global/OnboardItem';
-import {navigate} from '../utils/NavigationUtil';
+import { navigate } from '../utils/NavigationUtil';
 
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
@@ -33,7 +33,8 @@ const OnBoardingScreen: FC = () => {
         height: 0,
       }}
       dotColor="#D9D9D9"
-      scrollEnabled={true}>
+      scrollEnabled={true}
+    >
       <View style={styles.slide}>
         <OnboardItem
           imageSource={require('../assets/images/onboard1.png')}

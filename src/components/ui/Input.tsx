@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {TextInput, View, Text, TextInputProps} from 'react-native';
-import {Colors} from '../../utils/Colors';
+import React, { useState } from 'react';
+import { TextInput, View, Text, TextInputProps } from 'react-native';
+import { Colors } from '../../utils/Colors';
 import InputStyle from '../../styles/InputStyle';
 
 interface InputProps extends TextInputProps {
@@ -31,7 +31,8 @@ const Input: React.FC<InputProps> = ({
       testID="animatedView"
       style={{
         pointerEvents: disabled ? 'none' : 'auto',
-      }}>
+      }}
+    >
       {error && (
         <Text testID="errorText" style={[InputStyle.errorText]}>
           {error}
@@ -49,7 +50,8 @@ const Input: React.FC<InputProps> = ({
               : Colors.disabled,
             borderWidth: isFocused || error ? 2 : 1,
           },
-        ]}>
+        ]}
+      >
         <TextInput
           testID="textInput"
           style={InputStyle.input}
