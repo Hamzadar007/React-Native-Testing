@@ -1,1 +1,12 @@
-yarn lint:fix && yarn format && yarn test
+echo "Running pre-commit checks..."
+
+echo "Running tests..."
+yarn test
+
+echo "Running lint fix..."
+yarn lint:fix
+
+echo "Running format..."
+yarn format
+
+echo "Pre-commit checks completed successfully!"

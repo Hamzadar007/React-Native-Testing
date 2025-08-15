@@ -6,9 +6,9 @@ import {
   ActivityIndicator,
   TouchableOpacityProps,
 } from 'react-native';
-import {Colors} from '../../utils/Colors';
+import { Colors } from '../../utils/Colors';
 
-import {normalizeModerately} from '../../utils/Scaling';
+import { normalizeModerately } from '../../utils/Scaling';
 import TextStyle from '../../styles/TextStyle';
 
 interface CustomButtonProps extends TouchableOpacityProps {
@@ -32,10 +32,11 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       testID="custom-button"
       style={[
         styles.button,
-        {backgroundColor: backgroundColor || Colors.primary},
+        { backgroundColor: backgroundColor || Colors.primary },
       ]}
       onPress={onPress}
-      {...props}>
+      {...props}
+    >
       {loading ? (
         <ActivityIndicator
           testID="activity-indicator"
@@ -43,7 +44,8 @@ const CustomButton: React.FC<CustomButtonProps> = ({
         />
       ) : (
         <Text
-          style={[TextStyle.buttonText, {color: textColor || Colors.white}]}>
+          style={[TextStyle.buttonText, { color: textColor || Colors.white }]}
+        >
           {title}
         </Text>
       )}

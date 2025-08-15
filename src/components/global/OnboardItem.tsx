@@ -8,8 +8,8 @@ import {
   ImageSourcePropType,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {Colors} from '../../utils/Colors';
-import {normalizeModerately} from '../../utils/Scaling';
+import { Colors } from '../../utils/Colors';
+import { normalizeModerately } from '../../utils/Scaling';
 import TextStyle from '../../styles/TextStyle';
 
 interface OnboardItemProps {
@@ -35,7 +35,8 @@ const OnboardItem: React.FC<OnboardItemProps> = ({
     <ImageBackground
       source={imageSource}
       testID="background-image"
-      style={styles.backgroundImage}>
+      style={styles.backgroundImage}
+    >
       <LinearGradient
         colors={[
           'rgba(0,0,0,0.0)',
@@ -43,7 +44,8 @@ const OnboardItem: React.FC<OnboardItemProps> = ({
           'rgba(0,0,0,0.8)',
           'rgba(0,0,0,1)',
         ]}
-        style={styles.overlay}>
+        style={styles.overlay}
+      >
         <View style={styles.container}>
           <Text style={TextStyle.title}>{title}</Text>
           <Text style={TextStyle.subtitle}>{subtitle}</Text>
@@ -51,14 +53,16 @@ const OnboardItem: React.FC<OnboardItemProps> = ({
           {buttonTitleSecond ? (
             <View style={styles.buttonContainer}>
               <TouchableOpacity
-                style={[styles.multiBtn, {backgroundColor: Colors.primary}]}
-                onPress={onPressFirst}>
+                style={[styles.multiBtn, { backgroundColor: Colors.primary }]}
+                onPress={onPressFirst}
+              >
                 <Text style={TextStyle.buttonText}>{buttonTitleFirst}</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={[styles.multiBtn, {backgroundColor: Colors.white}]}
-                onPress={onPressSecond}>
+                style={[styles.multiBtn, { backgroundColor: Colors.white }]}
+                onPress={onPressSecond}
+              >
                 <Text style={TextStyle.buttonTextBlack}>
                   {buttonTitleSecond}
                 </Text>
@@ -84,7 +88,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    padding: 20,
+
     justifyContent: 'flex-end',
   },
   buttonContainer: {
@@ -104,7 +108,7 @@ const styles = StyleSheet.create({
     width: '45%',
     paddingVertical: normalizeModerately(15),
   },
-  container: {marginBottom: 40},
+  container: { marginBottom: 40 },
 });
 
 export default OnboardItem;

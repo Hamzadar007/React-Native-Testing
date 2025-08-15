@@ -1,7 +1,7 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {navigationRef} from '../utils/NavigationUtil';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { navigationRef } from '../utils/NavigationUtil';
 import SplashScreen from '../screens/SplashScreen';
 import OnBoardingScreen from '../screens/OnboardingScreen';
 import LoginScreen from '../screens/LoginScreen';
@@ -17,7 +17,8 @@ const Navigation = () => {
         initialRouteName="SplashScreen"
         screenOptions={() => ({
           headerShown: false,
-        })}>
+        })}
+      >
         <Stack.Screen component={SplashScreen} name="SplashScreen" />
         <Stack.Screen component={OnBoardingScreen} name="OnBoardingScreen" />
         <Stack.Screen component={LoginScreen} name="LoginScreen" />

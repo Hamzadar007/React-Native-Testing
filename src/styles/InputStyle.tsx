@@ -1,13 +1,13 @@
-import {StyleSheet} from 'react-native';
-import {Colors} from '../utils/Colors';
+import { StyleSheet } from 'react-native';
+import { Colors } from '../utils/Colors';
 
-import {RFValue} from 'react-native-responsive-fontsize';
+import { RFValue } from 'react-native-responsive-fontsize';
 import {
   normalizeHeight,
   normalizeModerately,
   normalizeWidth,
 } from '../utils/Scaling';
-import {FONTS} from '../utils/Fonts';
+import { FONTS } from '../utils/Fonts';
 
 const InputStyle = StyleSheet.create({
   inputContainer: {

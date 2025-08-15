@@ -1,5 +1,5 @@
-import React, {ReactNode} from 'react';
-import {SafeAreaView, StyleSheet, ScrollView, ViewStyle} from 'react-native';
+import React, { ReactNode } from 'react';
+import { SafeAreaView, StyleSheet, ScrollView, ViewStyle } from 'react-native';
 
 interface CustomSafeAreaScrollViewProps {
   children: ReactNode;
@@ -14,7 +14,8 @@ const CustomSafeAreaScrollView: React.FC<CustomSafeAreaScrollViewProps> = ({
     <SafeAreaView testID="safe-area-view" style={[styles.container, style]}>
       <ScrollView
         nestedScrollEnabled={true}
-        contentContainerStyle={styles.content}>
+        contentContainerStyle={styles.content}
+      >
         {children}
       </ScrollView>
     </SafeAreaView>
