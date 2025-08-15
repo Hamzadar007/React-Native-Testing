@@ -1,10 +1,8 @@
 name: CI/CD Pipeline
 
 on:
-  pull_request:
-    branches: [ main, master ]
   push:
-    branches: [ main, master ]
+    branches: [ detox ]
 
 jobs:
   # Job for pull requests - runs tests, linting, and formatting
