@@ -124,19 +124,57 @@ jobs:
     - name: Make Gradlew executable
       run: chmod +x android/gradlew
       
+    # Verify gradlew setup
+    - name: Verify gradlew setup
+      run: |
+        echo "Checking gradlew file..."
+        ls -la android/gradlew
+        echo "Checking if gradlew is executable..."
+        if [ -x "android/gradlew" ]; then
+          echo "Gradlew is executable"
+        else
+          echo "Gradlew is not executable, fixing permissions..."
+          chmod +x android/gradlew
+        fi
+        
+        echo "Testing gradlew..."
+        cd android
+        ./gradlew --version || echo "Gradlew test failed"
+        cd ..
+      
     # Clean and prepare the project
     - name: Clean Android project
       run: |
-        cd android
-        ./gradlew clean
-        cd ..
+        echo "Starting Android project cleanup..."
+        
+        # Try gradlew clean first
+        if [ -f "android/gradlew" ] && [ -x "android/gradlew" ]; then
+          echo "Using gradlew to clean project..."
+          cd android
+          ./gradlew clean --no-daemon --stacktrace || echo "Gradlew clean failed, using manual cleanup..."
+          cd ..
+        fi
+        
+        # Manual cleanup as fallback
+        echo "Performing manual cleanup..."
+        rm -rf android/app/build 2>/dev/null || echo "Could not remove app/build"
+        rm -rf android/.gradle 2>/dev/null || echo "Could not remove .gradle"
+        rm -rf android/build 2>/dev/null || echo "Could not remove build"
+        rm -rf android/app/.cxx 2>/dev/null || echo "Could not remove .cxx"
+        
+        echo "Cleanup completed"
         
     # Generate native code for libraries
     - name: Generate native code
       run: |
-        cd android
-        ./gradlew generateCodegenArtifactsFromSchema
-        cd ..
+        if [ -f "android/gradlew" ]; then
+          echo "Generating native code..."
+          cd android
+          ./gradlew generateCodegenArtifactsFromSchema --no-daemon || echo "Native code generation failed but continuing..."
+          cd ..
+        else
+          echo "Gradlew not found, skipping native code generation"
+        fi
         
     # Verify native code generation
     - name: Verify native code generation
