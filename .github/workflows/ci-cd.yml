@@ -64,17 +64,32 @@ jobs:
         
     - name: Setup Android SDK
       uses: android-actions/setup-android@v2
+      with:
+        api-level: 34
+        target: android-34
+        arch: x86_64
       
-    # Add NDK and CMake setup for native dependencies
-    - name: Setup Android NDK
+    # Setup essential Android build tools
+    - name: Setup Android build tools
       run: |
-        echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "ndk;27.1.12297006"
-        echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "cmake;3.22.1"
+        echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "build-tools;34.0.0"
+        echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "platform-tools"
+        echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "platforms;android-34"
         
-    - name: Set environment variables
+    # Only install NDK if needed for native dependencies
+    - name: Setup Android NDK (if needed)
       run: |
-        echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/27.1.12297006" >> $GITHUB_ENV
-        echo "ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/27.1.12297006" >> $GITHUB_ENV
+        echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "ndk;25.2.9519653"
+        echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/25.2.9519653" >> $GITHUB_ENV
+        echo "ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/25.2.9519653" >> $GITHUB_ENV
+        
+    - name: Verify Android setup
+      run: |
+        echo "Android SDK: $ANDROID_HOME"
+        echo "Build tools installed:"
+        ls -la $ANDROID_HOME/build-tools/
+        echo "Platforms installed:"
+        ls -la $ANDROID_HOME/platforms/
         
     - name: Cache Gradle packages
       uses: actions/cache@v3
