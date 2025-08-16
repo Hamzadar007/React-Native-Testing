@@ -76,12 +76,26 @@ jobs:
         echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "platform-tools"
         echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "platforms;android-34"
         
-    # Only install NDK if needed for native dependencies
-    - name: Setup Android NDK (if needed)
+    # Install the exact NDK version that works locally
+    - name: Setup Android NDK
       run: |
-        echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "ndk;25.2.9519653"
-        echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/25.2.9519653" >> $GITHUB_ENV
-        echo "ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/25.2.9519653" >> $GITHUB_ENV
+        echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "ndk;27.1.12297006"
+        echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/27.1.12297006" >> $GITHUB_ENV
+        echo "ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/27.1.12297006" >> $GITHUB_ENV
+        
+    # Install CMake that matches the NDK version
+    - name: Setup CMake
+      run: |
+        echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "cmake;3.22.1"
+        echo "CMAKE_HOME=$ANDROID_HOME/cmake/3.22.1" >> $GITHUB_ENV
+        
+    # Set up environment variables to match local working configuration
+    - name: Setup environment variables
+      run: |
+        echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/27.1.12297006" >> $GITHUB_ENV
+        echo "ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/27.1.12297006" >> $GITHUB_ENV
+        echo "CMAKE_HOME=$ANDROID_HOME/cmake/3.22.1" >> $GITHUB_ENV
+        echo "PATH=$ANDROID_HOME/ndk/27.1.12297006/toolchains/llvm/prebuilt/linux-x86_64/bin:$ANDROID_HOME/cmake/3.22.1/bin:$PATH" >> $GITHUB_ENV
         
     - name: Verify Android setup
       run: |
@@ -90,6 +104,10 @@ jobs:
         ls -la $ANDROID_HOME/build-tools/
         echo "Platforms installed:"
         ls -la $ANDROID_HOME/platforms/
+        echo "NDK installed:"
+        ls -la $ANDROID_HOME/ndk/
+        echo "CMake installed:"
+        ls -la $ANDROID_HOME/cmake/
         
     - name: Cache Gradle packages
       uses: actions/cache@v3
@@ -98,6 +116,7 @@ jobs:
           ~/.gradle/caches
           ~/.gradle/wrapper
           $ANDROID_HOME/ndk
+          $ANDROID_HOME/cmake
         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
         restore-keys: |
           ${{ runner.os }}-gradle-
@@ -105,13 +124,38 @@ jobs:
     - name: Make Gradlew executable
       run: chmod +x android/gradlew
       
+    # Clean and prepare the project
+    - name: Clean Android project
+      run: |
+        cd android
+        ./gradlew clean
+        cd ..
+        
+    # Generate native code for libraries
+    - name: Generate native code
+      run: |
+        cd android
+        ./gradlew generateCodegenArtifactsFromSchema
+        cd ..
+        
+    # Verify native code generation
+    - name: Verify native code generation
+      run: |
+        echo "Checking if native code directories were generated:"
+        ls -la node_modules/lottie-react-native/android/build/generated/source/codegen/jni/ 2>/dev/null || echo "lottie-react-native native code not found"
+        ls -la node_modules/react-native-gesture-handler/android/build/generated/source/codegen/jni/ 2>/dev/null || echo "react-native-gesture-handler native code not found"
+        ls -la node_modules/react-native-mmkv/android/build/generated/source/codegen/jni/ 2>/dev/null || echo "react-native-mmkv native code not found"
+        ls -la node_modules/react-native-pager-view/android/build/generated/source/codegen/jni/ 2>/dev/null || echo "react-native-pager-view native code not found"
+        
     - name: Create keystore file
       run: |
         echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/keyStore.jks
         echo "keystore file created"
         
     - name: Build signed APK
-      run: cd android && ./gradlew assembleRelease --warning-mode all --no-daemon
+      run: |
+        cd android
+        ./gradlew assembleRelease --warning-mode all --no-daemon --stacktrace
       env:
         KEYSTORE_FILE: release.keystore
         KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
